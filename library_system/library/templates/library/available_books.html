@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Available Books</title>
+</head>
+<body>
+    <h1>Books Available for Borrowing</h1>
+    <p><a href="{% url 'add_book' %}">➕ Add a New Book</a></p>
+    <ul>
+        {% for book in books %}
+            <li>
+                {{ book.title }} by {{ book.author.name }} ({{ book.publication_year }})
+                <form method="get" action="{% url 'borrow_record' book.id %}" style="display:inline;">
+                    <button type="submit">Borrow this book</button>
+                </form>
+            </li>
+
+        {% empty %}
+            <li>No books available right now.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

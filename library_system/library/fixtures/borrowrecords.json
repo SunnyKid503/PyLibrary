@@ -1,0 +1,23 @@
+[
+    {
+      "model": "library.borrowrecord",
+      "pk": 1,
+      "fields": {
+        "book": 1,
+        "user": 1,
+        "borrowed_at": "2024-12-01T10:00:00Z",
+        "returned_at": null
+      }
+    },
+    {
+      "model": "library.borrowrecord",
+      "pk": 2,
+      "fields": {
+        "book": 2,
+        "user": 2,
+        "borrowed_at": "2024-11-01T12:00:00Z",
+        "returned_at": "2024-11-15T14:00:00Z"
+      }
+    }
+  ]
+  

@@ -1,0 +1,23 @@
+[
+    {
+      "model": "library.book",
+      "pk": 1,
+      "fields": {
+        "title": "1984",
+        "ISBN": "9780451524935",
+        "publication_year": 1949,
+        "author": 1
+      }
+    },
+    {
+      "model": "library.book",
+      "pk": 2,
+      "fields": {
+        "title": "Pride and Prejudice",
+        "ISBN": "9780141439518",
+        "publication_year": 1813,
+        "author": 2
+      }
+    }
+  ]
+  

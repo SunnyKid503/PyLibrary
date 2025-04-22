@@ -1,0 +1,19 @@
+[
+    {
+      "model": "library.author",
+      "pk": 1,
+      "fields": {
+        "name": "George Orwell",
+        "bio": "Author of 1984 and Animal Farm"
+      }
+    },
+    {
+      "model": "library.author",
+      "pk": 2,
+      "fields": {
+        "name": "Jane Austen",
+        "bio": "Famous English novelist"
+      }
+    }
+  ]
+  

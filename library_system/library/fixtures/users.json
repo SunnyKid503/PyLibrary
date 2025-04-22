@@ -1,0 +1,23 @@
+[
+    {
+      "model": "library.user",
+      "pk": 1,
+      "fields": {
+        "name": "Alice",
+        "surname": "Johnson",
+        "cin": "AA123456",
+        "age": 28
+      }
+    },
+    {
+      "model": "library.user",
+      "pk": 2,
+      "fields": {
+        "name": "Bob",
+        "surname": "Smith",
+        "cin": "BB654321",
+        "age": 35
+      }
+    }
+  ]
+  
