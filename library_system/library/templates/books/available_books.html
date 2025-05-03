@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Available Books</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-[#e4f5e7] via-[#b27f58] to-[#e4f5e7] min-h-screen flex flex-col items-center justify-start py-10 px-4">
+
+    <!-- Header -->
+    <header class="w-full max-w-5xl bg-[#d1e8d5] rounded-2xl shadow-md p-6 mb-8 flex items-center justify-between border border-[#b27f58]">
+        <a href="{% url 'landing_page' %}">
+        <div class="flex items-center gap-4">
+            <div class="bg-[#b27f58] text-white text-3xl p-3 rounded-full shadow-lg">📚</div>
+            <div>
+                <h1 class="text-3xl font-bold text-[#4b3d2a]">Available Books</h1>
+                <p class="text-sm text-[#5e5141]">Choose a book to borrow</p>
+            </div>
+        </div>
+        <a href="{% url 'add_book' %}">
+            <button class="bg-[#d1e8d5] text-[#4b3d2a] px-4 py-2 rounded-lg hover:bg-[#b7d1c2] transition duration-300 text-sm shadow font-semibold border border-[#b27f58]">
+                ➕ Add a New Book
+            </button>
+        </a>
+        </a>
+    </header>
+
+    <!-- Books List -->
+    <div class="p-1 rounded-3xl bg-gradient-to-r from-[#bfae9c] to-[#b27f58] shadow-lg w-full max-w-5xl">
+        <div class="bg-[#fffdfb] rounded-2xl p-8 shadow-xl h-full">
+            {% if books %}
+                <ul class="divide-y divide-gray-200">
+                    {% for book in books %}
+                    <li class="py-4 flex items-center justify-between hover:bg-[#f5eee4] px-4 rounded-lg transition">
+                        <div>
+                            <p class="font-semibold text-[#4b3d2a]">{{ book.title }}</p>
+                            <p class="text-sm text-[#5e5141]">by {{ book.author.name }} ({{ book.publication_year }})</p>
+                        </div>
+                        <form method="get" action="{% url 'AddBorrow_record' book.id %}">
+                            <button type="submit" class="bg-[#d1e8d5] text-[#4b3d2a] px-3 py-1 rounded-md hover:bg-[#b7d1c2] text-xs transition font-semibold border border-[#b27f58]">
+                                📖 Borrow this book
+                            </button>
+                        </form>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-gray-600 mt-4 text-center">😕 No books available right now.</p>
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+</html>

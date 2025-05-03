@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Return Book</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-[#e8dfcc] via-[#c28d65] to-[#a3c6a4] min-h-screen flex items-center justify-center">
+
+    <div class="bg-white shadow-xl rounded-2xl p-10 max-w-md w-full text-center">
+        <!-- Emoji and Header -->
+        <div class="text-4xl mb-2">📥</div>
+        <div class="w-full border border-[#b5764e] p-4 rounded-xl mb-6 bg-[#fdf6e3]">
+            <h1 class="text-xl font-semibold text-gray-800 font-sans">
+                Return "<span class="italic text-[#7b674c]">{{ record.book.title }}</span>"
+            </h1>
+        </div>
+
+        <form method="post" class="space-y-5 text-left">
+            {% csrf_token %}
+
+            <p><strong>User:</strong> {{ record.user.name }} (CIN: {{ record.user.cin }})</p>
+            <p><strong>Borrowed at:</strong> {{ record.borrowed_at }}</p>
+            <p><strong>Estimated return:</strong> {{ record.estimated_return_at }}</p>
+
+            <div>
+                <label for="returned_at" class="block text-sm font-medium text-gray-700">Actual Return Date:</label>
+                <input type="datetime-local" name="returned_at" required
+                    class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400">
+            </div>
+
+            <div>
+                <label for="rating" class="block text-sm font-medium text-gray-700">Rate the book (1–5):</label>
+                <select name="rating" class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400">
+                    <option value="" disabled selected>Choose a rating</option>
+                    <option value="1">⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="5">⭐⭐⭐⭐⭐</option>
+                </select>
+            </div>
+
+            <button type="submit"
+                class="w-full bg-[#7b674c] text-white py-2 rounded-lg hover:bg-[#6c5b43] transition duration-300 font-semibold">
+                ✅ Confirm Return
+            </button>
+        </form>
+    </div>
+    <script>
+        function validateDates() {
+            const borrowInput = document.getElementById("borrowed_at");
+            const returnedInput = document.getElementById("returned_at");
+        
+            const borrowedAt = new Date(borrowInput.value);
+            const ReturnAt = new Date(returnedInput.value);
+        
+            if (estimatedReturnAt <= borrowedAt) {
+                alert("Return date must be after the borrowed date.");
+                return false; 
+            }
+        
+            return true; 
+        }
+        </script>
+
+</body>
+</html>

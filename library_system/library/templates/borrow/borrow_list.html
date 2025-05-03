@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Borrow Records</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-[#e4f5e7] via-[#b27f58] to-[#e4f5e7] min-h-screen flex flex-col items-center justify-start py-10 px-4">
+
+    <!-- Header with logo and title -->
+    <header class="w-full max-w-6xl bg-[#d1e8d5] rounded-2xl shadow-md p-6 mb-8 flex items-center justify-between border border-[#b27f58]">
+        <a href="{% url 'landing_page' %}">
+        <div class="flex items-center gap-4">
+            <div class="bg-[#b27f58] text-white text-3xl p-3 rounded-full shadow-lg">
+                📖
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold text-[#4b3d2a]">LeafyReads Borrow Log</h1>
+                <p class="text-sm text-[#5e5141]">Track borrowed books and return history</p>
+            </div>
+        </div>
+        </a>
+        <a href="{% url 'available_books'%}">
+            <button class="bg-[#B27F58] text-white px-4 py-2 rounded-lg hover:bg-[#b7d1c2] transition duration-300 text-sm shadow font-semibold border border-[#b27f58]">
+                ➕ Add Borrow Record
+            </button>
+        </a>
+    </header>
+
+    <!-- Title + Add Borrow Button -->
+    <div class="w-full max-w-6xl flex items-center justify-between mb-6">
+        <h2 class="text-3xl font-extrabold text-white">📚 Borrow Records</h2>
+       
+        
+    </div>
+
+    <!-- Borrow Records List -->
+    <div class="p-1 rounded-3xl bg-gradient-to-r from-[#bfae9c] to-[#b27f58] shadow-lg w-full max-w-6xl">
+        <div class="bg-[#fffdfb] rounded-2xl p-8 shadow-xl h-full">
+            {% if borrow_records %}
+            <div class="overflow-x-auto max-h-[500px] overflow-y-scroll border border-[#b27f58] rounded-lg">
+                <table class="min-w-full bg-white text-sm text-left">
+                    <thead class="bg-[#b27f58] text-white sticky top-0 z-10">
+                        <tr>
+                            <th class="py-3 px-4">📘 Book Title</th>
+                            <th class="py-3 px-4">🙋 User</th>
+                            <th class="py-3 px-4">🆔 CIN</th>
+                            <th class="py-3 px-4">📅 Borrowed</th>
+                            <th class="py-3 px-4">⏳ Return Est.</th>
+                            <th class="py-3 px-4">✅ Returned</th>
+                            <th class="py-3 px-4">⚙️ Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        {% for record in borrow_records %}
+                        <tr class="hover:bg-[#f5eee4] transition duration-200">
+                            <td class="py-2 px-4">{{ record.book.title }}</td>
+                            <td class="py-2 px-4">{{ record.user.name }} {{ record.user.surname }}</td>
+                            <td class="py-2 px-4">{{ record.user.cin }}</td>
+                            <td class="py-2 px-4">{{ record.borrowed_at }}</td>
+                            <td class="py-2 px-4">{{ record.estimated_return_at }}</td>
+                            <td class="py-2 px-4">
+                                {% if record.returned_at %}
+                                    {{ record.returned_at }}
+                                {% else %}
+                                    <span class="text-red-500 font-semibold">Not returned</span>
+                                {% endif %}
+                            </td>
+                            <td class="py-2 px-4 flex gap-2 flex-wrap">
+                                {% if not record.returned_at %}
+                                <a href="{% url 'EndBorrow_record' record.id %}">
+                                    <button class="bg-[#d1e8d5] text-[#4b3d2a] px-3 py-1 rounded-md hover:bg-[#b7d1c2] text-xs transition font-semibold border border-[#b27f58]">
+                                        📥 End Borrow
+                                    </button>
+                                </a>
+                                {% endif %}
+                                <a href="{% url 'updateBorrow' record.id %}">
+                                    <button class="bg-[#d1e8d5] text-[#4b3d2a] px-3 py-1 rounded-md hover:bg-[#b7d1c2] text-xs transition font-semibold border border-[#b27f58]">
+                                        ✏️ Update
+                                    </button>
+                                </a>
+                                <a href="{% url 'deleteBorrow' record.id %}">
+                                    <button class="bg-[#d1e8d5] text-[#4b3d2a] px-3 py-1 rounded-md hover:bg-red-200 text-xs transition font-semibold border border-[#b27f58]">
+                                        🗑️ Delete
+                                    </button>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <p class="text-gray-600 mt-4">😕 No borrow records found.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Back to Books Button -->
+    <div class="mt-10 w-full max-w-6xl flex justify-end">
+        <a href="{% url 'available_books' %}">
+            <button class="bg-[#d1e8d5] text-[#4b3d2a] px-4 py-2 rounded-lg hover:bg-[#804e25] transition duration-300 text-sm shadow">
+                🔙 Back to Books
+            </button>
+        </a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Borrow Record</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-[#e3d7c1] via-[#c18c60] to-[#b5d1b3] min-h-screen flex items-center justify-center">
+
+    <div class="bg-white shadow-2xl rounded-2xl p-8 max-w-md w-full text-gray-800">
+        <!-- Title Card -->
+        <div class="w-full border border-[#b5764e] p-4 rounded-xl mb-5 bg-[#fdf6e3] flex items-center space-x-3">
+            <div class="text-2xl">🔁</div>
+            <h1 class="text-lg font-semibold text-gray-800 font-sans">
+                Update Borrow Record of "<span class="italic text-[#7b674c]">{{ record.book.title }}</span>"
+            </h1>
+        </div>
+
+        <!-- Info Badge -->
+        <div class="text-sm text-left mb-5 bg-green-100 text-green-700 px-4 py-2 rounded-lg border border-green-300">
+            ✅ This is a good choice! You’re keeping the system up-to-date.
+        </div>
+
+        <form method="post" class="space-y-5" onsubmit="return validateDates()">
+            {% csrf_token %}
+
+            <p class="text-sm"><strong>📖 Book:</strong> {{ record.book.title }}</p>
+            <p class="text-sm"><strong>👤 User:</strong> {{ record.user.name }} (CIN: {{ record.user.cin }})</p>
+
+            <div>
+                <label for="borrowed_at" class="block text-sm font-medium">Borrowed At:</label>
+                <input type="datetime-local" name="borrowed_at" id = "borrowed_at"
+                       value="{{ record.borrowed_at|date:'Y-m-d\\TH:i' }}" required
+                       class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400">
+            </div>
+
+            <div>
+                <label for="estimated_return_at" class="block text-sm font-medium">Estimated Return At:</label>
+                <input type="datetime-local" name="estimated_return_at" id="estimated_return_at"
+                       value="{{ record.estimated_return_at|date:'Y-m-d\\TH:i' }}" required
+                       class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400">
+            </div>
+
+            {% if record.returned_at %}
+                <div>
+                    <label for="returned_at" class="block text-sm font-medium">Returned At:</label>
+                    <input type="datetime-local" name="returned_at" id="estimated_return_at"
+                           value="{{ record.returned_at|date:'Y-m-d\\TH:i' }}"
+                           class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400">
+                </div>
+            {% else %}
+                <p class="text-sm text-gray-700 italic">📦 Returned At: Not yet returned (cannot be modified)</p>
+            {% endif %}
+
+            <button type="submit"
+                    class="w-full bg-[#7b674c] text-white py-2 rounded-lg hover:bg-[#6c5b43] transition duration-300 font-semibold">
+                ✏️ Update Borrow Record
+            </button>
+        </form>
+
+        <a href="{% url 'borrow_list' %}" class="block text-center mt-5">
+            <button class="w-full border border-[#7b674c] text-[#7b674c] py-2 rounded-lg hover:bg-[#f0eae0] transition duration-300 font-medium">
+                ⬅️ Back to Borrow List
+            </button>
+        </a>
+    </div>
+    <script>
+        function validateDates() {
+            const borrowInput = document.getElementById("borrowed_at");
+            const estimatedInput = document.getElementById("estimated_return_at");
+        
+            const borrowedAt = new Date(borrowInput.value);
+            const estimatedReturnAt = new Date(estimatedInput.value);
+        
+            if (estimatedReturnAt <= borrowedAt) {
+                alert("Estimated return date must be after the borrowed date.");
+                return false;   
+            }
+            return true; 
+        }
+    </script>
+
+</body>
+</html>

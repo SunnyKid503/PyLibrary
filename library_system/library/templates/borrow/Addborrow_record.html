@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Borrow {{ book.title }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Segoe UI"', 'Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-[#e9d9b2] via-[#b5764e] to-[#a3c6ad] min-h-screen flex items-center justify-center">
+
+    <div class="bg-white shadow-2xl rounded-3xl p-12 max-w-md w-full text-center border border-[#cbbf9a] flex flex-col items-center">
+        <!-- Good choice icon on the left -->
+        <div class="text-3xl mb-3 text-green-600">
+            ✔️
+        </div>
+
+        <div class="w-full border border-[#b5764e] p-4 rounded-xl mb-4 bg-[#fdf6e3]">
+            <h1 class="text-xl font-semibold text-gray-800 font-sans">
+                Borrow "<span class="italic text-[#7b674c]">{{ book.title }}</span>"
+            </h1>
+        </div>
+        
+        <form method="post" class="space-y-6 font-sans w-full">
+            {% csrf_token %}
+            <div class="text-left">
+                <label for="cin" class="block text-sm font-medium text-gray-700">Enter CIN:</label>
+                <input type="text" name="cin" required
+                    class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400">
+            </div>
+
+            <div class="text-left">
+                <label for="estimated_return_at" class="block text-sm font-medium text-gray-700">Estimated Return Date:</label>
+                <input type="datetime-local" name="estimated_return_at"
+                    class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400">
+            </div>
+
+            <button type="submit"
+                class="w-full bg-[#7b674c] text-white py-2 rounded-lg hover:bg-[#6c5b43] transition duration-300 font-semibold">
+                Confirm Borrow
+            </button>
+        </form>
+        {% if error_message %}
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            {{ error_message }}
+        </div>
+    {% endif %}
+    </div>
+
+</body>
+</html>

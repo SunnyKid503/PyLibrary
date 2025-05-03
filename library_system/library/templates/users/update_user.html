@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update User</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Segoe UI"', 'Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelector("form").addEventListener("submit", function (e) {
+                const ageInput = document.querySelector('input[name="age"]');
+                const age = parseInt(ageInput.value);
+        
+                if (isNaN(age) || age < 6) {
+                    alert("Age must be at least 6 years old.");
+                    e.preventDefault(); // Prevent form submission
+                }
+            });
+        });
+    </script>
+</head>
+<body class="bg-gradient-to-br from-[#fdf6e3] via-[#db996c] to-[#c9e3ca] min-h-screen flex items-center justify-center">
+
+    <div class="bg-white shadow-2xl rounded-2xl p-10 max-w-md w-full text-gray-800">
+        <!-- Top Icons -->
+        <div class="text-center mb-4">
+            <div class="text-3xl mb-1">🧑‍🏫</div>
+            <h1 class="text-xl font-bold">Update User</h1>
+        </div>
+
+        <form method="POST" class="space-y-5">
+            {% csrf_token %}
+
+            <div>
+                <label class="block text-sm font-medium">Name:</label>
+                <input type="text" name="name" value="{{ user.name }}" required
+                       class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium">Surname:</label>
+                <input type="text" name="surname" value="{{ user.surname }}" required
+                       class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium">CIN:</label>
+                <input type="text" name="cin" value="{{ user.cin }}" required
+                       class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400">
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium">Age:</label>
+                <input type="number" name="age" value="{{ user.age }}" required
+                       class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400">
+            </div>
+
+            <button type="submit"
+                    class="w-full bg-[#7b674c] text-white py-2 rounded-lg hover:bg-[#6c5b43] transition duration-300 font-semibold">
+                ✏️ Update User
+            </button>
+
+            <div class="text-center mt-3 text-xl opacity-70">
+                📚 📖
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

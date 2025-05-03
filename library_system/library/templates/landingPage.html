@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to LeafyReads</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-[#fdf6e3] via-[#db996c] to-[#c9e3ca] flex flex-col items-center justify-center text-[#4b3d2a] px-6 py-10">
+
+    <!-- Welcome Header -->
+    <header class="text-center mb-10">
+        <h1 class="text-5xl font-extrabold mb-4 drop-shadow">📖 Welcome to LeafyReads Library</h1>
+        <p class="text-lg text-[#5e5141]">Manage your books, track borrowings, and discover users – all in one place</p>
+    </header>
+
+    <!-- Section Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl">
+
+        <!-- Books -->
+        <a href="{% url 'available_books' %}" class="bg-[#d1e8d5] hover:bg-[#b7d1c2] transition rounded-2xl p-6 shadow-xl flex flex-col items-center text-center border border-[#b27f58]">
+            <div class="text-4xl mb-3">📚</div>
+            <h2 class="text-xl font-bold mb-1">Browse Books</h2>
+            <p class="text-sm text-[#5e5141]">See what books are available in the library</p>
+        </a>
+
+        <!-- Borrow Records -->
+        <a href="{% url 'borrow_list' %}" class="bg-[#d1e8d5] hover:bg-[#b7d1c2] transition rounded-2xl p-6 shadow-xl flex flex-col items-center text-center border border-[#b27f58]">
+            <div class="text-4xl mb-3">🔁</div>
+            <h2 class="text-xl font-bold mb-1">Borrow Records</h2>
+            <p class="text-sm text-[#5e5141]">Track borrow and return activities</p>
+        </a>
+
+        <!-- Users -->
+        <a href="{% url 'user_list' %}" class="bg-[#d1e8d5] hover:bg-[#b7d1c2] transition rounded-2xl p-6 shadow-xl flex flex-col items-center text-center border border-[#b27f58]">
+            <div class="text-4xl mb-3">👥</div>
+            <h2 class="text-xl font-bold mb-1">Users</h2>
+            <p class="text-sm text-[#5e5141]">Manage library users and their info</p>
+        </a>
+
+    </div>
+
+    <!-- Optional Footer -->
+    <footer class="mt-16 text-sm text-[#5e5141]">
+        &copy; 2025 LeafyReads Library. Made with ☕ and 💡.
+    </footer>
+
+</body>
+</html>

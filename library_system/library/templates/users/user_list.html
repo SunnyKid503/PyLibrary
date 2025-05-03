@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registered Users</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-[#fdf6e3] via-[#db996c] to-[#c9e3ca] min-h-screen flex flex-col items-center justify-start py-10 px-4">
+
+    <!-- Header with logo and title -->
+    <header class="w-full max-w-6xl bg-white rounded-2xl shadow-md p-6 mb-8 flex items-center justify-between border border-[#db996c]">
+        <a href="{% url 'landing_page' %}">
+        <div class="flex items-center gap-4">
+            <!-- Example book logo (you can replace the emoji with an actual logo image if you want) -->
+            <div class="bg-[#db996c] text-white text-3xl p-3 rounded-full shadow-lg">
+                📚
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold text-[#7b674c]">LeafyReads Library</h1>
+                <p class="text-sm text-gray-500">Explore, Borrow, Return — All in one place.</p>
+            </div>
+        </div>
+    </a>
+        
+        <a href="{% url 'add_user' %}">
+            <button class="bg-[#e1a95f] text-white px-4 py-2 rounded-lg hover:bg-[#d0893a] transition duration-300 text-sm shadow">
+                ➕ Add User
+            </button>
+        </a>
+    </header>
+    
+<!-- Registered Users Title -->
+<h2 class="text-3xl font-extrabold text-white mb-6">📋 Registered Users</h2>
+
+
+    <!-- User List Card -->
+    <div class="p-1 rounded-3xl bg-gradient-to-r from-[#c9e3ca] to-[#db996c] shadow-lg w-full max-w-6xl">
+        <div class="bg-white rounded-2xl p-8 shadow-xl h-full">
+
+            {% if users %}
+            <div class="overflow-x-auto max-h-[500px] overflow-y-scroll border border-[#db996c] rounded-lg">
+                <table class="min-w-full bg-white text-sm text-left">
+                    <thead class="bg-[#db996c] text-white sticky top-0 z-10">
+                        <tr>
+                            <th class="py-3 px-4">🧍 Name</th>
+                            <th class="py-3 px-4">🧍‍♂️ Surname</th>
+                            <th class="py-3 px-4">🆔 CIN</th>
+                            <th class="py-3 px-4">🎂 Age</th>
+                            <th class="py-3 px-4">⚙️ Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        {% for user in users %}
+                        <tr class="hover:bg-[#fefaf6] transition duration-200">
+                            <td class="py-2 px-4">{{ user.name }}</td>
+                            <td class="py-2 px-4">{{ user.surname }}</td>
+                            <td class="py-2 px-4">{{ user.cin }}</td>
+                            <td class="py-2 px-4">{{ user.age }}</td>
+                            <td class="py-2 px-4 flex gap-2">
+                                <a href="{% url 'update_user' user.id %}">
+                                    <button class="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 text-xs transition">
+                                        ✏️ Edit
+                                    </button>
+                                </a>
+                                <a href="{% url 'delete_user' user.id %}">
+                                    <button class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-xs transition">
+                                        🗑️ Delete
+                                    </button>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <p class="text-gray-600 mt-4">😕 No users found.</p>
+            {% endif %}
+
+        </div>
+    </div>
+
+</body>
+</html>

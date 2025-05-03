@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a Book</title>
+    <script>
+        // Dynamically populate year options from 1800 to 2025
+        window.onload = function () {
+            const select = document.getElementById('year-select');
+            const otherOption = document.createElement('option');
+            otherOption.value = 'other';
+            otherOption.text = 'Before 1800';
+            select.appendChild(otherOption);
+
+            for (let year = 1800; year <= 2025; year++) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.text = year;
+                select.appendChild(option);
+            }
+        }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-[#fdf6e3] via-[#db996c] to-[#c9e3ca] min-h-screen flex items-center justify-center">
+
+    <div class="bg-white shadow-md shadow-[#d4c6aa] rounded-2xl p-8 w-full max-w-lg">
+        <h1 class="text-3xl font-bold text-center text-[#5e4636] mb-6">📚 Add a New Book</h1>
+
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+
+            <div>
+                <label for="title" class="block text-[#5e4636] font-medium">Title</label>
+                <input type="text" name="title" required class="w-full px-4 py-2 border border-[#c8bfa7] rounded-md focus:outline-none focus:ring-2 focus:ring-[#d8c7a2]">
+            </div>
+
+            <div>
+                <label for="isbn" class="block text-[#5e4636] font-medium">ISBN</label>
+                <input type="text" name="isbn" required class="w-full px-4 py-2 border border-[#c8bfa7] rounded-md focus:outline-none focus:ring-2 focus:ring-[#d8c7a2]">
+            </div>
+
+            <div>
+                <label for="publication_year" class="block text-[#5e4636] font-medium">Publication Year</label>
+                <select name="publication_year" id="year-select" required class="w-full px-4 py-2 border border-[#c8bfa7] rounded-md focus:outline-none focus:ring-2 focus:ring-[#d8c7a2]">
+                    <!-- Options are populated via JS -->
+                </select>
+            </div>
+
+            <div>
+                <label for="author" class="block text-[#5e4636] font-medium">Author</label>
+                <select name="author" required class="w-full px-4 py-2 border border-[#c8bfa7] rounded-md focus:outline-none focus:ring-2 focus:ring-[#d8c7a2]">
+                    {% for author in authors %}
+                        <option value="{{ author.id }}">{{ author.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="flex justify-center pt-4">
+                <button type="submit" class="bg-[#db996c] hover:bg-[#b4a580] text-white font-semibold px-6 py-2 rounded-lg transition duration-300 shadow">Add Book</button>
+            </div>
+        </form>
+
+        <p class="mt-6 text-center">
+            <a href="{% url 'available_books' %}" class="text-[#7b674c] hover:underline">← Back to Available Books</a>
+        </p>
+    </div>
+
+</body>
+</html>
